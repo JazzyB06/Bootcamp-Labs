@@ -6,7 +6,7 @@
 }
 
 body {
-    background-color: rgb(201, 245, 235); 
+    background-color: white;
 }
 body {
     margin: 0;
@@ -23,6 +23,9 @@ body {
           img:hover {
             opacity: 1.0;
           } 
+          h1 {text-align: center;}
+          h2 {text-align: center;} 
+          body {text-align: center;}       
   /* Style the header */
   .header {
     background-color: whitesmoke;
@@ -45,10 +48,14 @@ body {
     text-decoration: none;
   }
   div {
-background-color: lightcyan;
+background-color: whitesmoke;
 }
   /* Change color on hover */
   .topnav a:hover {
     background-color: #ddd;
     color: black;
   }
+  footer p {
+    padding: 10px 0;
+    }
+ 

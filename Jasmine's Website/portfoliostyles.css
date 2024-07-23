@@ -6,12 +6,13 @@
 }
 le>
         body {
-            background-color: lightcyan; /* Replace with your desired color */
+            background-color: lightgray; /* Replace with your desired color */
         }
   
   body {
     margin: 0;
   }
+  body {text-align: center;}
   
   /* Style the header */
   .header {
@@ -41,7 +42,9 @@ le>
     background-color: #ddd;
     color: black;
   }
-  
+  div {
+    background-color: whitesmoke;
+    }
   img {
     border-radius: 8px;
           }
@@ -53,3 +56,9 @@ le>
     img:hover {
             opacity: 1.0;
           }
+          footer p {
+            padding: 10px 0;
+            }
+   footer p {
+      padding: 10px 0;
+    }  
