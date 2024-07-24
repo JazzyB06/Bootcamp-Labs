@@ -65,3 +65,25 @@ le>
     html * {
       font-family: 'Courier New', Courier, monospace;
     }
+    .header-content {
+      opacity: 0; /* Initially hide the header content */
+      transform: translateY(-50px); /* Move header content up by 50px */
+      transition: opacity 0.5s ease, transform 0.5s ease; /* Transition effect */
+    }
+    
+    /* Apply animation when header comes into view */
+    .animated-header {
+      animation: slideIn 1s ease forwards;
+    }
+    
+    /* Keyframes for animation */
+    @keyframes slideIn {
+      0% {
+        transform: translateY(-50px); /* Start position of the animation */
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0); /* End position of the animation */
+        opacity: 1;
+      }
+    }
