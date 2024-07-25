@@ -55,9 +55,6 @@ background-color: whitesmoke;
     background-color: #ddd;
     color: black;
   }
-  footer p {
-    padding: 10px 0;
-    }
   html * {
       font-family: 'Courier New', Courier, monospace;
     }
@@ -83,4 +80,21 @@ background-color: whitesmoke;
         opacity: 1;
       }
     }
-   
+    footer p {
+      padding: 10px 0;
+      } 
+    /* styles.css */
+/* Custom CSS for Bootstrap Carousel */
+.carousel-control-prev,
+.carousel-control-next {
+  background-color: lightgray; /* Change to your desired color */
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: white; /* Change to your desired color */
+}
+.carousel > .carousel-inner > .carousel-item > img{
+  width:340px; /* Yeap you can change the width and height*/
+  height:500px;
+}

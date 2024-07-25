@@ -58,10 +58,9 @@ le>
           }
           footer p {
             padding: 10px 0;
+    
             }
-   footer p {
-      padding: 10px 0;
-    }  
+
     html * {
       font-family: 'Courier New', Courier, monospace;
     }
@@ -87,3 +86,43 @@ le>
         opacity: 1;
       }
     }
+    footer p {
+      padding: 10px 0;
+    }  
+    
+/* styles.css */
+/* Custom CSS for Bootstrap Carousel */
+.carousel-control-prev,
+.carousel-control-next {
+  background-color: lightgray; /* Change to your desired color */
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: lightgray; /* Change to your desired color */
+
+}.carousel > .carousel-inner > .carousel-item > img{
+  width:340px; 
+  height:500px;
+}
+.carousel-container {
+  overflow: hidden; /* Hide any overflowing content */
+  padding: 20px; /* Adjust padding as needed */
+  box-sizing: border-box; /* Ensure padding is included in width/height */
+}
+
+@media (max-width: 768px) {
+  .carousel-container {
+      height: 300px; /* Adjust height for smaller screens */
+      padding: 10px; /* Adjust padding for smaller screens */
+  }
+
+  .carousel-slide {
+      flex: 0 0 calc(100% - 20px); /* Adjust width for smaller padding */
+  }
+}
+
+
+
+
+

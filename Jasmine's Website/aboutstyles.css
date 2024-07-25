@@ -96,9 +96,7 @@ body {
               body {
                 margin: 0;
               }
-  footer p {
-      padding: 10px 0;
-      }
+
       html * {
         font-family: 'Courier New', Courier, monospace;
       }    
@@ -124,4 +122,6 @@ body {
           opacity: 1;
         }
       }
-              
+      footer p {
+        padding: 10px 0;
+        }   
