@@ -2,7 +2,9 @@
 namespace CoffeeShopRegistration.Models
 {
 	public class User
-	{
+	{ 
+
+		public int UserId {  get; set; }
 		[Required(ErrorMessage = "First name is required")] //If not provided throw this error message
 		public string FirstName { get; set; }
 		[Required(ErrorMessage = "Last name is required")]
@@ -15,3 +17,4 @@ namespace CoffeeShopRegistration.Models
 		//Validation is the process of checking what the user puts in to prevent them from having a choice to mess thing up
 	}
 }
+
