@@ -1,0 +1,12 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<form asp-action="SearchAnimals" asp-controller="Animal" method="post">
+    <div class="form-group">
+        <label for="simpleInput"> Type in breed:</label>
+        <input type="text" name="breedInput" />
+    </div>
+    <button type ="submit">Submit</button>
+</form>
+<a href="@Url.Action("Index")">Back to Home</a>

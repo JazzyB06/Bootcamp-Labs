@@ -1,0 +1,24 @@
+﻿<form asp-action="Add" method="post">
+    <div>
+        <label>Name</label>
+        <input type="text" name="Name" />
+    </div>
+    <div>
+        <label>Description</label>
+        <textarea name="Description"></textarea>
+    </div>
+    <div>
+        <label>Breed</label>
+        <input type="text" name="Breed" />
+    </div>
+    <div>
+        <label>Age</label>
+        <input type="number" name="Age" />
+    </div>
+    <div>
+        <label>Image URL</label>
+        <input type="text" name="Img" />
+    </div>
+    <input type="submit" value="Add Animal" />
+</form>
+<a href="@Url.Action("Index")">Back to Home</a>

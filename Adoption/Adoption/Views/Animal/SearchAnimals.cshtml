@@ -1,0 +1,16 @@
+﻿@model List<Adoption.Models.Data.Animal>
+
+@foreach (var animal in Model)
+{
+    <img src="@animal.Image" alt="@animal.Name" width="100" />
+    <p>@animal.Name</p>
+    <p>@animal.Description</p>
+    <p>@animal.Breed</p>
+    <p>@animal.Age</p>
+
+    <form asp-action="Adopt" method="post">
+        <input type="hidden" name="id" value="@animal.Id" />
+        <input type="submit" value="Adopt" />
+    </form>
+}
+<a href="@Url.Action("Index")>Back to Home</a>
