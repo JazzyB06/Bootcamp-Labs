@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TacosAPI.Models;
+using TacosApp.Data;
 
 namespace TacosAPI.Controllers
 {
@@ -8,36 +9,32 @@ namespace TacosAPI.Controllers
     [ApiController]
     public class TacosController : ControllerBase
     {
-        
-        private static readonly List<Taco> _tacos = new List<Taco>();
+        private readonly FastFoodTacoDbContext _fastFoodTacoDB;
+
+        public TacosController(FastFoodTacoDbContext fastFoodTacoDbContext)
+        {
+            _fastFoodTacoDB = fastFoodTacoDbContext;
+        }
 
         // GET /Tacos
         [HttpGet]
-        public IActionResult GetTacos([FromQuery] bool? softShell, [FromQuery] string sortByCost)
+        public IActionResult GetTacos([FromQuery] bool? isSoftShell)
         {
-            var filteredTacos = new List<Taco>(_tacos);
 
-            if (softShell.HasValue)
+            if (isSoftShell != null)
             {
-                filteredTacos = filteredTacos.Where(t => t.SoftShell == softShell.Value).ToList();
+                return Ok(_fastFoodTacoDB.Tacos.Where(x => x.SoftShell == isSoftShell).ToList());
             }
 
-            // Sorting by cost if sortByCost parameter is provided
-            if (!string.IsNullOrEmpty(sortByCost))
-            {
-                filteredTacos = sortByCost.ToLower() == "asc"
-                    ? filteredTacos.OrderBy(t => t.Cost).ToList()
-                    : filteredTacos.OrderByDescending(t => t.Cost).ToList();
-            }
 
-            return Ok(filteredTacos);
+            return Ok(_fastFoodTacoDB.Tacos.ToList());
         }
 
         // GET /Tacos/{id}
         [HttpGet("{id}")]
         public IActionResult GetTaco(int id)
         {
-            var taco = _tacos.FirstOrDefault(t => t.Id == id);
+            var taco = _fastFoodTacoDB.Tacos.Find(id);
 
             if (taco == null)
             {
@@ -61,24 +58,39 @@ namespace TacosAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            taco.Id = _tacos.Any() ? _tacos.Max(t => t.Id) + 1 : 1;
-            _tacos.Add(taco);
+            taco.Id = _fastFoodTacoDB.Tacos.Any() ? _fastFoodTacoDB.Tacos.Max(t => t.Id) + 1 : 1;
+            _fastFoodTacoDB.Tacos.Add(taco);
+            _fastFoodTacoDB.SaveChanges();
 
             return CreatedAtAction(nameof(GetTaco), new { id = taco.Id }, taco);
         }
 
         // DELETE /Tacos/{id}
         [HttpDelete("{id}")]
+
         public IActionResult DeleteTaco(int id)
         {
-            var taco = _tacos.FirstOrDefault(t => t.Id == id);
+            // Find the taco by ID
+            var taco = _fastFoodTacoDB.Tacos.FirstOrDefault(t => t.Id == id);
 
             if (taco == null)
             {
                 return NotFound();
             }
 
-            _tacos.Remove(taco);
+            try
+            {
+               
+                _fastFoodTacoDB.Tacos.Remove(taco);
+
+              
+                _fastFoodTacoDB.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                
+                return StatusCode(500, "Internal server error. " + ex.Message);
+            }
 
             return NoContent();
         }
