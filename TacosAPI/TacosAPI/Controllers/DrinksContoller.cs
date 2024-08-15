@@ -1,32 +1,46 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TacosAPI.Models;
+using TacosApp.Data;
 
 namespace TacosAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class Drinks : ControllerBase
+    public class DrinksController : ControllerBase
     {
-        private static readonly List<Drink> _drinks = new List<Drink>();
+        private readonly FastFoodTacoDbContext _fastFoodDrinkDB;
+
+        public DrinksController(FastFoodTacoDbContext fastFoodDrinkDbContext)
+        {
+            _fastFoodDrinkDB = fastFoodDrinkDbContext;
+        }
 
         // GET /Drinks
+   
         [HttpGet]
         public IActionResult GetDrinks([FromQuery] string sortByCost)
         {
-            var drinks = _drinks.AsEnumerable();
+           
+            var drinks = _fastFoodDrinkDB.Drinks.AsQueryable();
 
-            if (sortByCost.ToLower() == "ascending")
+            if (!string.IsNullOrEmpty(sortByCost))
             {
-                drinks = drinks.OrderBy(d => d.Cost);
-            }
-            else if (sortByCost.ToLower() == "descending")
-            {
-                drinks = drinks.OrderByDescending(d => d.Cost);
-            }
-            else if (sortByCost != null) 
-            {
-                return BadRequest("Invalid sortByCost value. Use either 'ascending' or 'descending'.");
+                sortByCost = sortByCost.Trim().ToLower();
+
+                
+                if (string.Equals(sortByCost, "ascending"))
+                {
+                    drinks = drinks.OrderBy(d => d.Cost);
+                }
+                else if (string.Equals(sortByCost, "descending"))
+                {
+                    drinks = drinks.OrderByDescending(d => d.Cost);
+                }
+                else
+                {
+                    return BadRequest("Invalid sortByCost value. Use either 'ascending' or 'descending'.");
+                }
             }
 
             return Ok(drinks.ToList());
@@ -36,14 +50,21 @@ namespace TacosAPI.Controllers
         [HttpGet("{id}")]
         public IActionResult GetDrink(int id)
         {
-            var drink = _drinks.FirstOrDefault(d => d.Id == id);
-
-            if (drink == null)
+            try
             {
-                return NotFound();
-            }
+                var drink = _fastFoodDrinkDB.Drinks.FirstOrDefault(d => d.Id == id);
 
-            return Ok(drink);
+                if (drink == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(drink);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error. " + ex.Message);
+            }
         }
 
         // POST /Drinks
@@ -60,8 +81,8 @@ namespace TacosAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            drink.Id = _drinks.Any() ? _drinks.Max(d => d.Id) + 1 : 1;
-            _drinks.Add(drink);
+            drink.Id = _fastFoodDrinkDB.Drinks.Any() ? _fastFoodDrinkDB.Drinks.Max(d => d.Id) + 1 : 1;
+            _fastFoodDrinkDB.Drinks.Add(drink);
 
             return CreatedAtAction(nameof(GetDrink), new { id = drink.Id }, drink);
         }
@@ -75,7 +96,7 @@ namespace TacosAPI.Controllers
                 return BadRequest("There's a mismatch between ID in the URL and ID in the body.");
             }
 
-            var drink = _drinks.FirstOrDefault(d => d.Id == id);
+            var drink = _fastFoodDrinkDB.Drinks.FirstOrDefault(d => d.Id == id);
 
             if (drink == null)
             {
