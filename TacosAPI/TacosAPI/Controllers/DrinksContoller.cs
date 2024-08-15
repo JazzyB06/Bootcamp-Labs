@@ -8,20 +8,25 @@ namespace TacosAPI.Controllers
     [ApiController]
     public class Drinks : ControllerBase
     {
-        private static List<Drink> _drinks = new List<Drink>();
+        private static readonly List<Drink> _drinks = new List<Drink>();
 
+        // GET /Drinks
         [HttpGet]
         public IActionResult GetDrinks([FromQuery] string sortByCost)
         {
-            var drinks = _drinks.AsEnumerable(); 
+            var drinks = _drinks.AsEnumerable();
 
-            if (sortByCost == "ascending")
+            if (sortByCost.ToLower() == "ascending")
             {
                 drinks = drinks.OrderBy(d => d.Cost);
             }
-            else if (sortByCost == "descending")
+            else if (sortByCost.ToLower() == "descending")
             {
                 drinks = drinks.OrderByDescending(d => d.Cost);
+            }
+            else if (sortByCost != null) 
+            {
+                return BadRequest("Invalid sortByCost value. Use either 'ascending' or 'descending'.");
             }
 
             return Ok(drinks.ToList());
@@ -31,7 +36,7 @@ namespace TacosAPI.Controllers
         [HttpGet("{id}")]
         public IActionResult GetDrink(int id)
         {
-            var drink = _drinks.Find(d => d.Id == id);
+            var drink = _drinks.FirstOrDefault(d => d.Id == id);
 
             if (drink == null)
             {
@@ -47,8 +52,14 @@ namespace TacosAPI.Controllers
         {
             if (drink == null)
             {
-                return BadRequest();
+                return BadRequest("Drink data is required.");
             }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             drink.Id = _drinks.Any() ? _drinks.Max(d => d.Id) + 1 : 1;
             _drinks.Add(drink);
 
@@ -61,10 +72,10 @@ namespace TacosAPI.Controllers
         {
             if (updatedDrink == null || id != updatedDrink.Id)
             {
-                return BadRequest();
+                return BadRequest("There's a mismatch between ID in the URL and ID in the body.");
             }
 
-            var drink = _drinks.Find(d => d.Id == id);
+            var drink = _drinks.FirstOrDefault(d => d.Id == id);
 
             if (drink == null)
             {
@@ -78,3 +89,4 @@ namespace TacosAPI.Controllers
         }
     }
 }
+

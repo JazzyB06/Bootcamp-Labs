@@ -9,17 +9,25 @@ namespace TacosAPI.Controllers
     public class TacosController : ControllerBase
     {
         
-        private static List<Taco> _tacos = new List<Taco>(); 
+        private static readonly List<Taco> _tacos = new List<Taco>();
 
         // GET /Tacos
         [HttpGet]
-        public IActionResult GetTacos([FromQuery] bool? softShell)
+        public IActionResult GetTacos([FromQuery] bool? softShell, [FromQuery] string sortByCost)
         {
             var filteredTacos = new List<Taco>(_tacos);
 
             if (softShell.HasValue)
             {
                 filteredTacos = filteredTacos.Where(t => t.SoftShell == softShell.Value).ToList();
+            }
+
+            // Sorting by cost if sortByCost parameter is provided
+            if (!string.IsNullOrEmpty(sortByCost))
+            {
+                filteredTacos = sortByCost.ToLower() == "asc"
+                    ? filteredTacos.OrderBy(t => t.Cost).ToList()
+                    : filteredTacos.OrderByDescending(t => t.Cost).ToList();
             }
 
             return Ok(filteredTacos);
@@ -29,7 +37,7 @@ namespace TacosAPI.Controllers
         [HttpGet("{id}")]
         public IActionResult GetTaco(int id)
         {
-            var taco = _tacos.Find(t => t.Id == id);
+            var taco = _tacos.FirstOrDefault(t => t.Id == id);
 
             if (taco == null)
             {
@@ -45,7 +53,12 @@ namespace TacosAPI.Controllers
         {
             if (taco == null)
             {
-                return BadRequest();
+                return BadRequest("Taco data is required.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
             }
 
             taco.Id = _tacos.Any() ? _tacos.Max(t => t.Id) + 1 : 1;
@@ -58,7 +71,7 @@ namespace TacosAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteTaco(int id)
         {
-            var taco = _tacos.Find(t => t.Id == id);
+            var taco = _tacos.FirstOrDefault(t => t.Id == id);
 
             if (taco == null)
             {
