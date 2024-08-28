@@ -1,0 +1,49 @@
+.completed {
+    text-decoration: line-through;
+  }
+  .complete {
+    border: 1px solid #ff69b4;
+    color: #ff69b4;
+    background: transparent;
+  }
+  
+  .delete {
+    border: 1px solid #ccc;
+    background: transparent;
+  }
+  
+  .submit {
+    background-color: #ff1493;
+    border: 1px solid #eee;
+    color: white;
+  }
+  .priority-high {
+    color: crimson;
+  }
+  
+  .priority-low {
+    color: darkgoldenrod;
+  }
+  body {
+    font-family: Arial, sans-serif;
+}
+
+button {
+    margin-left: 10px;
+  }
+  
+  form {
+    margin-bottom: 20px;
+  }
+  
+  input[type="text"], input[type="number"] {
+    margin-right: 10px;
+  }
+  
+  input[type="radio"] {
+    margin-right: 5px;
+  }
+  
+  label {
+    margin-right: 15px;
+  }

@@ -1,0 +1,59 @@
+<h1>Todo List</h1>
+
+<!-- Filtering Input Details-->
+<div>
+  <input type="text" [(ngModel)]="filterTodos" placeholder="Filter todos">
+</div>
+
+<!-- Add New Todo Form Details-->
+<div>
+  <form (ngSubmit)="addTodo()">
+    <input type="text" [(ngModel)]="newTask" name="task" placeholder="New Task" required>
+    <input type="number" [(ngModel)]="newDuration" name="duration" placeholder="Duration in minutes" required>
+    <div>
+      <label>
+        <input type="radio" [(ngModel)]="newPriority" value="NORMAL"> Normal
+      </label>
+      <label>
+        <input type="radio" [(ngModel)]="newPriority" value="HIGH"> High
+      </label>
+      <label>
+        <input type="radio" [(ngModel)]="newPriority" value="LOW"> Low
+      </label>
+    </div>
+    <button type="submit">Add Todo</button>
+  </form>
+</div>
+
+
+<!-- Todo List Details -->
+<div *ngFor="let todo of filteredTodos(); let i = index" [ngClass]="{'completed': todo.completed}">
+  <div>
+    <span>{{ todo.task }}</span> - <span>{{ todo.duration }} mins</span>
+    <div [ngClass]="{'priority-high': todo.priority === 'HIGH', 'priority-low': todo.priority === 'LOW'}">
+      {{ todo.priority | titlecase }} Priority
+    </div>
+    <button *ngIf="!todo.completed" class="complete" (click)="markAsComplete(todo)">Complete</button>
+    <button (click)="deleteTask(todo)">X</button>
+    <button (click)="startEditing(i)">Edit</button>
+  </div>
+
+  <!-- Editing Form Details-->
+  <div *ngIf="editingIndex === i">
+    <input type="text" [(ngModel)]="editedTask" placeholder="Edit Task">
+    <input type="number" [(ngModel)]="editedDuration" placeholder="Edit Duration">
+    <div>
+      <label>
+        <input type="radio" [(ngModel)]="editedPriority" value="NORMAL"> Normal
+      </label>
+      <label>
+        <input type="radio" [(ngModel)]="editedPriority" value="HIGH"> High
+      </label>
+      <label>
+        <input type="radio" [(ngModel)]="editedPriority" value="LOW"> Low
+      </label>
+    </div>
+    <button (click)="saveEditing()">Save</button>
+    <button (click)="cancelEditing()">Cancel</button>
+  </div>
+</div>
