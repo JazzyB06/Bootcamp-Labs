@@ -4,12 +4,12 @@
   .complete {
     border: 1px solid #ff69b4;
     color: #ff69b4;
-    background: transparent;
+    background: white;
   }
   
   .delete {
     border: 1px solid #ccc;
-    background: transparent;
+    background: white;
   }
   
   .submit {
@@ -24,20 +24,29 @@
   .priority-low {
     color: darkgoldenrod;
   }
+
+  .priority-normal {
+    color: darkorchid;
+  }
+  
   body {
     font-family: Arial, sans-serif;
 }
 
 button {
-    margin-left: 10px;
+  background: none;
+  margin-left: 0px;
+  background: whitesmoke;
   }
   
   form {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
   
+  
+
   input[type="text"], input[type="number"] {
-    margin-right: 10px;
+    margin-right: 0px;
   }
   
   input[type="radio"] {
@@ -46,4 +55,16 @@ button {
   
   label {
     margin-right: 15px;
+  }
+
+  body {
+    background: linear-gradient(to right, #f857a6, #ff5858);
+  }
+
+  .box-shadow {
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  }
+ 
+  div {
+    background-color: white;
   }

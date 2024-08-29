@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Todo } from '../models/todo';
-import { CommonModule, DecimalPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -12,28 +12,32 @@ import { FormsModule } from '@angular/forms';
 })
 export class TodoListComponent {
   todos: Todo[] = [
-    {task: 'Go grocery shopping', completed: false, duration: 30, priority: 'HIGH'},
-    {task: 'Take the dog for a walk', completed: true, duration: 20, priority: 'LOW'},
-    {task: 'Cook dinner', completed: true, duration: 60, priority: 'HIGH'},
-    {task: 'Create a new painting', completed: false, duration: 90, priority: 'LOW'}
+    {
+      task: 'Go grocery shopping', completed: false, duration: 30, priority: 'HIGH',
+     
+    },
+    {
+      task: 'Take the dog for a walk', completed: true, duration: 20, priority: 'LOW',
+      
+    },
+    {
+      task: 'Cook dinner', completed: true, duration: 60, priority: 'HIGH',
+     
+    },
+    {
+      task: 'Create a new painting', completed: false, duration: 90, priority: 'LOW',
+    
+    }
   ];  
 
 
-  newTask: string = '';
-  newDuration: number | null = null;
-  newPriority: 'NORMAL' | 'HIGH' | 'LOW' = 'NORMAL';
-  filteredText: string = '';
-  editingIndex: number | null = null;
-  editedTask: string = '';
-  editedDuration: number | null = null;
-  editedPriority: 'NORMAL' | 'HIGH' | 'LOW' = 'NORMAL';
+newTask: string = '';
+newDuration: number | null = null;
+newPriority: 'NORMAL' | 'HIGH' | 'LOW' = 'NORMAL';
+filteredText: string = '';
 filterTodos: string ='';
 isListEmpty: string = '';
-saveEditing: any;
-cancelEditing: any;
 removeTodo: any;
-startEditing: any;
- 
 
 
   markAsComplete(todo: Todo): void {
@@ -52,7 +56,7 @@ startEditing: any;
         task: this.newTask,
         completed: false,
         duration: this.newDuration,
-        priority: this.newPriority
+        priority: this.newPriority,
       });
       this.newTask = '';
       this.newDuration = null;
