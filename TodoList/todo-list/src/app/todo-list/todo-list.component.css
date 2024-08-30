@@ -31,20 +31,23 @@
   
   body {
     font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
 }
 
 button {
   background: none;
   margin-left: 0px;
   background: whitesmoke;
+  padding: 3px;
   }
   
   form {
-    margin-bottom: 10px;
+    margin-bottom: 0px;
+    display: flex;
+    justify-content: left;
   }
   
-  
-
   input[type="text"], input[type="number"] {
     margin-right: 0px;
   }
@@ -61,10 +64,12 @@ button {
     background: linear-gradient(to right, #f857a6, #ff5858);
   }
 
+  div {
+    background: white;
+    padding: 3px;
+    position: relative;
+  }
   .box-shadow {
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
   }
  
-  div {
-    background-color: white;
-  }

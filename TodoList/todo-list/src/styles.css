@@ -2,6 +2,11 @@ body {
     background: linear-gradient(to right, #f857a6, #ff5858);
   }
 
+  div {
+    background: white;
+
+  }
+
 .box-shadow {
     background: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
  } 
@@ -10,6 +15,9 @@ body {
     font-family: Arial, sans-serif;
 }
 
-div {
-  background-color: white;
+form {
+  margin-bottom: 0px;
+  display: flex;
+  justify-content: center;
 }
+

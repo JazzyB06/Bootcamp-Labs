@@ -1,16 +1,17 @@
 <h1>Todo List</h1>
-
-<!-- Filtering Input Details-->
-<div>
-  <input type="text" [(ngModel)]="filterTodos" placeholder="Filter todos">
-</div>
+ <!-- Filtering Input Details-->
+<div><input type="text" [(ngModel)]="filterTodos" placeholder="Filter todos"></div>
 
 <!-- Add New Todo Form Details-->
 <div>
+  <div class="form-container">
+  </div>
   <form (ngSubmit)="addTodo()">
-    <input type="text" [(ngModel)]="newTask" name="task" placeholder="New Task" required>
-    <input type="number" [(ngModel)]="newDuration" name="duration" placeholder="Duration in minutes" required>
-    <div>
+    <div><input type="text" [(ngModel)]="newTask" name="task" placeholder="New Task" required></div>
+    <div><input type="number" [(ngModel)]="newDuration" name="duration" placeholder="Duration in minutes" required></div>
+  <div>
+    <div class="priority-options">
+    </div>
       <label>
         <input name="prioritycheckbox" type="radio" [(ngModel)]="newPriority" value="NORMAL"> Normal
       </label>
@@ -28,13 +29,16 @@
 <!-- Todo List Details -->
 <div *ngFor="let todo of filteredTodos(); let i = index" [ngClass]="{'completed': todo.completed}">
   <div>
-    {{ todo.task }}
+    {{ todo.task }} 
     {{ todo.duration }} mins
+    </div>
     <div [ngClass]="{'priority-high': todo.priority === 'HIGH', 'priority-low': todo.priority === 'LOW', 'priority-normal': todo.priority === 'NORMAL' }">
       {{ todo.priority | titlecase }} Priority
     </div>
+    <div>
     <button *ngIf="!todo.completed" class="complete" (click)="markAsComplete(todo)">Complete</button>
     <button (click)="deleteTask(todo)">X</button>
   </div>
+</div>
 
   
