@@ -1,0 +1,6 @@
+<h2>Donuts!</h2>
+<div *ngFor="let donut of donuts" class="donut-item">
+    <img [src]="donut.photo" [alt]="donut.name" />
+    <p>{{ donut.name }}</p>
+    <a [href]="donut.attribution" target="_blank">Photo Attribution</a>
+  </div>

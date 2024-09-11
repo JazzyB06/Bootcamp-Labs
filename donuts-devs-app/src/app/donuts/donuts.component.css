@@ -1,0 +1,8 @@
+.donut-item {
+    margin-bottom: 20px;
+  }
+  
+  .donut-item img {
+    max-width: 100px; 
+    height: auto;
+  }
