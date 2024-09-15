@@ -11,7 +11,18 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<OrderDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("OrderDB")));
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalAngularApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -19,6 +30,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AllowLocalAngularApp");
 
 app.UseHttpsRedirection();
 
